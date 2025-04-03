@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原子科技HBM核科技生存服务器 - 我的世界科技服务器 - 官网首页</title>
+    <meta name="description" content="欢迎来到原子科技HBM核科技生存服务器！在这里体验硬核科技生存的乐趣。我们提供稳定的服务器、友好的社区和丰富的游戏内容。快来加入我们，一起探索未知的世界！关键词：原子科技, 我的世界科技服务器, HBM服务器地址, 核科技我的世界服务器,hbm的核科技, atomforge">
+    <meta property="og:title" content="原子科技HBM核科技生存服务器 - 我的世界科技服务器 - 官网首页">
+    <meta property="og:description" content="欢迎来到原子科技HBM核科技生存服务器！在这里体验硬核科技生存的乐趣。我们提供稳定的服务器、友好的社区和丰富的游戏内容。快来加入我们，一起探索未知的世界！关键词：原子科技, 我的世界科技服务器, HBM服务器地址, 核科技我的世界服务器,hbm的核科技, atomforge">
+    <link rel="shortcut icon" href="https://cdn.atomforge.cn/logo/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://cdn.atomforge.cn/logo/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.atomforge.cn/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.atomforge.cn/css/mc_atomforge.cn_v2.0.css">
+    <script src="https://cdn.atomforge.cn/js/marked.min.js"></script>
+    <script src="https://cdn.atomforge.cn/js/loading_frjqq.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    fetch('./word/pg_copy/home.md')
+        .then(response => response.text())
+        .then(md => {
+            document.getElementById('markdown-content').innerHTML = marked.parse(md);
+            document.querySelector('.loading-anime').style.display = 'none';
+        })
+        .catch(error => {
+            console.error('加载失败:', error);
+            document.getElementById('markdown-content').innerHTML = 
+                '<p class="error">⚠️请重试加载捏<br>服务球崩溃了</p>';
+            document.querySelector('.loading-anime').style.display = 'none';
+        });
+}
+);
+    </script>
+    <script src="https://cdn.atomforge.cn/js/erciyuan.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="/">_>AtomForge<_</a>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links" id="nav-links-container">
+            <!-- 导航生成 -->
+        </ul>
+    </nav>
+    <script>
+    window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 0) {
+        navbar.style.position = 'fixed';
+        navbar.style.top = '0';
+        navbar.style.width = '40%'; 
+    } else {
+        navbar.style.position = 'relative';
+        navbar.style.width = '53%'; 
+    }
+    });
+
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        // 点击汉堡菜单
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active'); 
+        });
+
+        // 点击任意区域关闭菜单
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.hamburger')) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        // 窗口大小变化时重置菜单
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active'); 
+            }
+        });
+
+        // 导航栏
+        fetch('/word/dock.json')
+            .then(response => response.json())
+            .then(data => {
+                const navLinksContainer = document.getElementById('nav-links-container');
+                data.forEach(link => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = link.url;
+                    a.textContent = link.label;
+                    li.appendChild(a);
+                    navLinksContainer.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Error loading nav config:', error));
+    </script>
+    <div class="container">
+        <header class="main-title-container">
+            <h1>原子科技HBM核科技生存服务器</h1>
+            <div class="title-underline"></div>
+        </header>
+        <div id="announcementModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2 id="announcementTitle">RC Admin提醒您</h2>
+                <p id="announcementText"></p>
+                <button id="announcementButton">知道了</button>
+            </div>
+        </div>
+       <script src="https://cdn.atomforge.cn/js/notice.js"></script>
+        <main>
+            <section class="group-card">
+                <div class="dynamic-text">欢迎来到原子科技服务器！</div>
+                <div class="avatar-section">
+                    <img src="https://cdn.atomforge.cn/image/mc_atomforge.cn.jpg" 
+                         alt="原子科技服务器硬件配置" 
+                         class="holographic-avatar">
+                    <div class="scan-line"></div>
+                </div>
+                <div class="button-container">
+                    <a href="https://qm.qq.com/q/Pe0Bs2K4YW" class="join-button">点我加群喵</a>
+                </div>
+            </section>
+            <section class="docs-container">
+                <div class="loading-anime">
+                    <div class="dot-flashing"></div>
+                </div>
+                <article id="markdown-content"></article>
+            </section>
+        </main>
+        <section class="group-container">
+            <div class="border-label">Frp服务球运行状态</div>
+            <iframe src="https://01.server.atomforge.cn/"
+                loading="lazy" 
+                class="holographic-iframe"></iframe>
+        </section>
+        <script>
+            // 动态文字
+            const dynamicText = document.querySelector('.dynamic-text');
+            const messages = [
+    "🎉欢迎来到原子科技服务器！电力全开⚡",
+    "⚔️加入我们，一起冒险吧！装备已就位🛡️",
+    "🔍更多惊喜等你发现！神秘彩蛋即将解锁🎁",
+    "🚀加入我们，实现你的梦想！星辰大海启航🌌",
+    "💻原子科技服务器，等你来玩！超90GB内存护航🚛",
+    "👋原子科技服务器，欢迎你！学生团队用心搭建🎓",
+    "🧒小小的孩子，🌟大大的梦想！创造无界限✨",
+    "🌈我们都是有梦想的人！核芯世界共同建造🏗️",
+    "⚡核芯驱动，生存革新！科技树全面升级🔋",
+    "🛠️硬核永续，创世新生！7x24智能守护🔒",
+    "☢️核能筑梦，青春运维！00后军团在线⚙️",
+    "🔌科技生存，永不停服！双线网络超流畅🛰️",
+    "🌐核芯世界，自由创造！建筑大师急募🏯"
+];
+
+            let index = 0;
+
+            function showNextMessage() {
+                dynamicText.style.opacity = 1;
+                dynamicText.textContent = messages[index];
+                index = (index + 1) % messages.length;
+                setTimeout(() => {
+                    dynamicText.style.opacity = 0;
+                }, 2000);
+            }
+
+            setInterval(showNextMessage, 3000);
+            showNextMessage(); 
+        </script>
+        <footer>
+            <p>© 2025 原子科技服务器. 版权所有.</p>
+            <p><a href="https://www.rainyun.com/NTQ2MDAw_">本站由雨云提供计算服务</a></p>
+            <p><a href="https://bqiu.top/">在这感谢雪球提供技术服务支持</a></p>
+        </footer>
+    </div>
+</body>
+</html>

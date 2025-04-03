@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原子科技HBM服务器 - 更新日志 - 封禁名单 - 感谢名单</title>
+    <meta name="description" content="在这里您可以查阅原子科技HBM服务器的最新更新日志、封禁名单以及特别感谢名单。了解服务器的最新动态、管理措施以及对社区贡献者的感谢。关键词：原子科技服务器, 服务器更新日志, 封禁名单, 感谢名单">
+    <meta property="og:title" content="原子科技HBM服务器客户端下载">
+    <meta property="og:url" content="https://www.atomforge.cn/Client_side_download/">
+    <meta property="og:description" content="在这里您可以查阅原子科技HBM服务器的最新更新日志、封禁名单以及特别感谢名单。了解服务器的最新动态、管理措施以及对社区贡献者的感谢。关键词：原子科技服务器, 服务器更新日志, 封禁名单, 感谢名单">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="shortcut icon" href="https://cdn.atomforge.cn/logo/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://cdn.atomforge.cn/logo/favicon.ico" type="image/x-icon">
+    <meta name="keywords" content="AtomForge, 游戏服务器, 版本更新, 玩家反馈, 赞助支持, 加入我们">
+    <meta name="author" content="AtomForge Team">
+    <meta name="robots" content="index, follow">
+    <link rel="stylesheet" href="https://cdn.atomforge.cn/css/other.css">
+    <script src="https://cdn.atomforge.cn/js/loading_frjqq.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="/">_>AtomForge<_</a>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links" id="nav-links-container">
+            <!-- 导航生成 -->
+        </ul>
+    </nav>
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        // 点击汉堡菜单
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active'); 
+        });
+
+        // 点击任意区域关闭菜单
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.hamburger')) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active'); 
+            }
+        });
+
+        // 窗口大小变化时重置菜单
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active'); 
+            }
+        });
+
+        // 动态生成导航栏
+        fetch('/word/dock.json')
+            .then(response => response.json())
+            .then(data => {
+                const navLinksContainer = document.getElementById('nav-links-container');
+                data.forEach(link => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = link.url;
+                    a.textContent = link.label;
+                    li.appendChild(a);
+                    navLinksContainer.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Error loading nav config:', error));
+    </script>  
+
+    <!-- 封神榜 -->
+    <div class="tables-wrapper">
+        <div class="table-container">
+            <h2 class="table-title">封神榜</h2>
+            <table id="ban-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>日期</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 动态添加 -->
+                </tbody>
+            </table>
+        </div>
+        <!-- 感谢名单 -->
+        <div class="table-container">
+            <h2 class="table-title">感谢名单</h2>
+            <table id="thank-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>原因</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 动态添加 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 获取表格元素
+        const banTable = document.getElementById('ban-table').getElementsByTagName('tbody')[0];
+        const thankTable = document.getElementById('thank-table').getElementsByTagName('tbody')[0];
+
+        // 获取数据
+        fetch('')
+            .then(response => response.json())
+            .then(data => {
+                //ban 表
+                data.ban.forEach(item => {
+                    let row = banTable.insertRow();
+                    let idCell = row.insertCell();
+                    let timeCell = row.insertCell();
+                    idCell.innerHTML = item.id; 
+                    timeCell.innerHTML = item.time; 
+                });
+
+                //thank 表
+                data.thank.forEach(item => {
+                    let row = thankTable.insertRow();
+                    let idCell = row.insertCell();
+                    let reasonCell = row.insertCell();
+                    idCell.innerHTML = item.id; 
+                    reasonCell.innerHTML = item.reason; 
+                });
+            })
+            .catch(error => console.error('Error loading data:', error));
+    </script>
+</body>
+</html>

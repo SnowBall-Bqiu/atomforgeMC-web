@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原子科技HBM服务器新手入门指南 - 客户端下载 & 连接教程</title>
+    <meta name="description" content="欢迎来到原子科技HBM服务器！本新手入门指南将引导您完成客户端下载、启动器安装、账号注册、服务器连接的每一步。通过本教程，您可以轻松上手，快速融入我们的游戏社区！关键词：我的世界服务器游玩指南，HBM服务器新手教程, 我的世界HBM, AtomForge核科技服务器">
+    <meta property="og:title" content="原子科技HBM服务器新手入门指南">
+    <meta property="og:url" content="https://www.atomforge.cn/play/">
+    <meta property="og:description" content="欢迎来到原子科技HBM服务器！本新手入门指南将引导您完成客户端下载、启动器安装、账号注册、服务器连接的每一步。通过本教程，您可以轻松上手，快速融入我们的游戏社区！关键词：HBM服务器新手教程, 我的世界HBM, AtomForge核科技服务器">
+    <meta property="og:image" content="https://cloudflare.r2.atomforge.cn/atomforge.cn/%E8%A7%A3%E5%8E%8B%E5%AE%8C%E6%88%90.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="shortcut icon" href="https://cdn.atomforge.cn/logo/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://cdn.atomforge.cn/logo/favicon.ico" type="image/x-icon">
+    <meta name="keywords" content="AtomForge, 游戏服务器, 版本更新, 玩家反馈, 赞助支持, 加入我们">
+    <meta name="author" content="AtomForge Team">
+    <meta name="robots" content="index, follow">
+    <link rel="stylesheet" href="https://cdn.atomforge.cn/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.atomforge.cn/css/mc_atomforge.cn_v2.0.css">
+    <script src="https://cdn.atomforge.cn/js/marked.min.js"></script>
+    <script src="https://cdn.atomforge.cn/js/loading_frjqq.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    fetch('/word/pg_copy/play.md')
+        .then(response => response.text())
+        .then(md => {
+            document.getElementById('markdown-content').innerHTML = marked.parse(md);
+            document.querySelector('.loading-anime').style.display = 'none';
+        })
+        .catch(error => {
+            console.error('加载失败:', error);
+            document.getElementById('markdown-content').innerHTML = 
+                '<p class="error">⚠️请重试加载捏<br>服务球崩溃了</p>';
+            document.querySelector('.loading-anime').style.display = 'none';
+        });
+}
+);
+</script>
+    <script src="https://cdn.atomforge.cn/js/erciyuan.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="/">_>AtomForge<_</a>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links" id="nav-links-container">
+            <!-- 导航生成 -->
+        </ul>
+    </nav>
+    <script>
+    window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 0) {
+        navbar.style.position = 'fixed';
+        navbar.style.top = '0';
+        navbar.style.width = '40%'; 
+    } else {
+        navbar.style.position = 'relative';
+        navbar.style.width = '53%'; 
+    }
+    });
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        // 点击汉堡菜单
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // 点击任意区域关闭菜单
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.hamburger')) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        // 窗口大小变化时重置菜单
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        // 动态生成导航栏
+        fetch('/word/dock.json')
+            .then(response => response.json())
+            .then(data => {
+                const navLinksContainer = document.getElementById('nav-links-container');
+                data.forEach(link => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = link.url;
+                    a.textContent = link.label;
+                    li.appendChild(a);
+                    navLinksContainer.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Error loading nav config:', error));
+    </script>
+    <div id="announcementModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="announcementTitle">RC Admin提醒您</h2>
+            <p id="announcementText"></p>
+            <button id="announcementButton">知道了</button>
+            <script src="https://cdn.atomforge.cn/js/notice.js"></script>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 0) {
+                navbar.style.position = 'fixed';
+                navbar.style.top = '0';
+                navbar.style.width = '100%';
+            } else {
+                navbar.style.position = 'relative';
+            }
+        });
+    </script>
+    <div class="container">
+        <header class="main-title-container">
+            <h1>原子科技HBM服务器新手入门指南</h1>
+        </header>
+       <main>
+            <section class="docs-container">
+                <div class="loading-anime">
+                    <div class="dot-flashing"></div>
+                </div>
+                <article id="markdown-content"></article>
+            </section>
+        </main>
+        <footer>
+            <p>© 2025 原子科技服务器. 版权所有.</p>
+            <p><a href="https://www.rainyun.com/NTQ2MDAw_">本站由雨云提供计算服务</a></p>
+            <p><a href="https://bqiu.top/">在这感谢雪球提供技术服务支持</a></p>
+        </footer>
+    </div>
+</body>
+</html>

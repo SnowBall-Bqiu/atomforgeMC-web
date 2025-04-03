@@ -1,0 +1,301 @@
+:root {
+    /* ... 其他变量 ... */
+    --nav-bg-color: #ffcc00; /* 导航栏背景色 - 活力黄 */
+    --nav-text-color: #222; /* 导航栏文字颜色 - 深灰，与黄色形成对比 */
+    --nav-hover-bg-color: #ffdd44; /* 导航栏链接悬停背景色 - 更亮的黄色 */
+    --nav-hover-text-color: #000; /* 导航栏链接悬停文字颜色 - 黑色 */
+    --nav-border-radius: 25px; /* 导航栏圆角半径 */
+    --main-color-rgb: 108, 92, 231;  /* 对应#6c5ce7 */
+    --accent-color-rgb: 168, 164, 255;  /* 对应#a8a4ff */
+}
+
+[data-theme="dark"] {
+    /* ... 其他深色模式变量 ... */
+    --nav-bg-color: #333; /* 深色模式导航栏背景色 */
+    --nav-text-color: #eee; /* 深色模式导航栏文字颜色 */
+    --nav-hover-color: #666; /* 深色模式导航栏悬停颜色 */
+    --nav-border-radius: 25px; /* 深色模式导航栏圆角半径 */
+    --main-color-rgb: 168, 164, 255;
+    --accent-color-rgb: 108, 92, 231;
+}
+
+/* 使body使用flex布局，并把footer布局在最下面 */
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+}
+
+body {
+    background: var(--bg-gradient);
+    font-family: 'Noto Sans SC', 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    color: inherit;
+}
+
+/* 导航栏样式 */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--nav-bg-color);
+    color: var(--nav-text-color);
+    padding: 10px 10px; /* 修改内边距，使导航栏变长 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 添加阴影 */
+    position: fixed; /* 固定导航栏在屏幕顶部 */
+    top: 0; /* 保持在顶部 */
+    width: 53%; /* 占据整个宽度 */
+    z-index: 10; /* 确保导航栏在最上层 */
+    overflow: hidden; /* 隐藏溢出部分 */
+    border-radius: var(--nav-border-radius); /* 添加圆角 */
+}
+
+/* Logo 样式 */
+.logo a {
+    color: var(--nav-text-color);
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    transition: color 0.3s ease; /* 添加颜色过渡效果 */
+}
+
+/* 汉堡菜单样式 */
+.hamburger {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 11; /* 确保汉堡按钮在导航栏之上 */
+}
+
+.hamburger:focus {
+    outline: none; /* 移除焦点样式 */
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--nav-text-color);
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+/* 新增汉堡包图标动画样式 */
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* 导航链接样式 */
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    background-color: var(--nav-bg-color);
+    padding: 10px 0;
+    display: none; /* 默认隐藏，点击汉堡按钮再显示 */
+}
+
+.nav-links.active {
+    display: flex; /* 点击汉堡按钮时显示 */
+    flex-direction: column; /* 确保在小屏幕上也能正确显示 */
+}
+
+.nav-links li {
+    margin-left: 20px;
+    margin-bottom: 10px; /* 增加底部间距 */
+    position: relative; /* 为动画定位 */
+}
+
+.nav-links a {
+    color: var(--nav-text-color);
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 15px; /* 链接本身的圆角 */
+    transition: all 0.3s ease; /* 添加所有属性过渡效果 */
+}
+
+.nav-links a:hover {
+    background-color: var(--nav-hover-bg-color);
+    color: var(--nav-hover-text-color);
+    box-shadow: 0 0 10px var(--nav-hover-bg-color);
+}
+
+/* 动画下划线 */
+.nav-links li::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-color);
+    bottom: 0;
+    left: 50%;
+    transition: all 0.3s ease; /* 动画过渡效果 */
+}
+
+.nav-links li:hover::after {
+    width: 50%;
+    left: 0;
+}
+
+/* 导航栏光标悬停动画 */
+.navbar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.5s ease;
+    z-index: -1;
+}
+/* 导航栏光标页面标题下划线带 */
+:root {
+    --main-color: #6c5ce7; /* 紫色 */
+    --accent-color: #a8a4ff; /* 浅紫色 */
+    /* ... 其他变量 ... */
+}
+
+[data-theme="dark"] {
+    --main-color: #a8a4ff; /* 浅紫色 */
+    --accent-color: #6c5ce7; /* 紫色 */
+    /* ... 其他变量 ... */
+}
+
+.main-title-container {
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    --main-color: #6c5ce7; /* 紫色 */
+    --accent-color: #a8a4ff; /* 浅紫色 */
+}
+.navbar:hover::before {
+    left: 100%;
+}
+/* 响应式布局 */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .logo {
+        margin-bottom: 10px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+
+    .nav-links a {
+        padding: 10px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .main-title-container {
+        padding: 1rem;
+    }
+
+    .docs-container {
+        padding: 1rem;
+    }
+
+    .footer {
+        padding: 1rem;
+    }
+
+    .join-button {
+        padding: 12px 28px;
+        font-size: 1rem;
+    }
+    .join-button::after {
+        animation-duration: 4s;
+    }
+}
+
+
+
+
+/* ---------------------- 表格样式 --------------------------- */
+
+
+/* 表格容器样式 */
+.table-container {
+    width: 48%; /* 宽度占父容器的一半(预留一些margin) */
+    overflow-x: auto; /* 横向滚动 */
+    border-radius: 15px; /* 圆角边框 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    margin: 20px 1%; /* 上下外边距，左右外边距设置为1% */
+    padding: 20px; /* 内边距 */
+    background-color: #fff; /* 背景色为白色 */
+    box-sizing: border-box; /* 保证padding和border不影响宽度 */
+}
+
+/* 表格标题样式 */
+.table-container .table-title {
+    font-size: 1.5rem; /* 标题字体大小 */
+    font-weight: bold; /* 标题字体加粗 */
+    margin-bottom: 10px; /* 标题底部外边距 */
+    color: rgba(249, 0, 0, 0.8); /* 标题文字颜色 */
+}
+
+/* 表格样式 */
+.table-container table {
+    width: 100%; /* 表格宽度占满容器 */
+    border-collapse: collapse; /* 合并边框 */
+}
+
+/* 表头和单元格样式 */
+.table-container th, .table-container td {
+    padding: 10px; /* 内边距 */
+    text-align: left; /* 左对齐 */
+    border-bottom: 1px solid #ddd; /* 底部边框 */
+}
+
+/* 表头样式 */
+.table-container th {
+    background-color: rgba(99, 126, 104, 0.293); /* 表头背景色 */
+    color: rgba(0, 0, 0, 0.8); /* 表头文字颜色 */
+}
+
+/* 表格行悬停样式 */
+.table-container tr:hover {
+    background-color: rgba(3, 212, 254, 0.132); /* 悬停背景色 */
+}
+
+.tables-wrapper {
+  display: flex;          /* 使用 Flexbox 布局 */
+  flex-direction: row; /* 子元素水平排列 */
+  flex-wrap: wrap;       /* 超出容器宽度时换行 */
+  justify-content: space-around;  /*  均匀排列每个元素 */
+  width: 100%;          /* 占据父元素的全部宽度 */
+}

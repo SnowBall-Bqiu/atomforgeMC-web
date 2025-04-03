@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AtomForge最新版本下载中心 - 加入我们一起玩吧！</title>
+    <meta name="description" content="Snowball 安全下载，提供最新版本的 AtomForge 我的世界客户端下载。一键下载 AtomForge 启动器，畅玩 HBM 核弹模组等更多精彩内容！"></meta>
+    <link rel="shortcut icon" href="https://cdn.atomforge.cn/image/d.svg" type="image/x-icon">
+    <link rel="icon" href="https://cdn.atomforge.cn/image/d.svg" type="image/x-icon">
+    <meta name="keywords" content="AtomForge, 游戏服务器, 版本更新, 玩家反馈, 赞助支持, 加入我们">
+    <meta name="author" content="AtomForge Team">
+    <meta name="robots" content="index, follow">
+    <script src="https://cdn.atomforge.cn/js/loading_frjqq.js"></script>
+    <style>
+        @font-face {
+            font-family: 'HarmonyOS';
+            src: url('https://s1.hdslb.com/bfs/static/jinkela/long/font/HarmonyOS_Regular.a.woff2') format('woff2');
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            font-family: 'HarmonyOS', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .content {
+            flex: 1;
+            padding-right: 60px;
+        }
+
+        .image-container {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .download-btn {
+            display: none;
+            background: #007AFF;
+            color: white;
+            padding: 15px 45px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: all 0.3s;
+            margin-top: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .download-btn:hover {
+            background: #0066CC;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 122, 255, 0.3);
+        }
+
+        #countdown {
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .download-status {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            display: none;
+        }
+        
+        .progress-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            margin-top: 10px;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #007AFF;
+            transition: width 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .content {
+                padding-right: 0;
+                margin-bottom: 40px;
+            }
+        }
+
+        .retry-download-btn {
+            display: inline-block;
+            background: #4CAF50; 
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .retry-download-btn:hover {
+            background-color: #367C39;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h1>Snowball 安全下载</h1>
+            <p>正在为您准备下载最新版本的 AtomForge我的世界客户端，请稍候片刻...</p>
+            <p id="countdown">自动下载将在 <span id="timer">5</span> 秒后开始</p>
+            <a href="#" class="download-btn" id="downloadButton">立即下载</a>
+            <div id="downloadStatus" class="download-status">
+                <div class="progress-bar">
+                    <div id="downloadProgress" class="progress"></div>
+                </div>
+                <a href="#" id="retryDownload" class="retry-download-btn" style="display:none;">重新开始下载</a>
+            </div>
+        </div>
+        <div class="image-container">
+            <img src="https://cdn.atomforge.cn/image/d.svg" alt="下载">
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let seconds = 5;
+            let downloadTriggered = false;
+
+            function updateTimer() {
+                timerElement.textContent = seconds;
+                if (seconds <= 0 && !downloadTriggered) {
+                    triggerDownload();
+                } else {
+                    seconds--;
+                    setTimeout(updateTimer, 1000);
+                }
+            }
+
+            function triggerDownload() {
+                downloadTriggered = true;
+                countdownElement.innerHTML = '正在启动安全下载通道...';
+                downloadButton.textContent = '重新下载';
+                downloadStatus.style.display = 'block';
+                const downloadUrl = 'https://data-image-r2.atomforge.cn/AtomForge_v2.1.5.zip';
+                
+                try {
+                    window.location.href = downloadUrl;
+                    startProgressAnimation();
+                } catch (error) {
+                    showFallbackOption();
+                    console.error('下载失败:', error);
+                }
+            }
+            function startProgressAnimation() {
+                const progressBar = document.getElementById('downloadProgress');
+                let progress = 0;
+                const animation = setInterval(() => {
+                    progress += Math.random() * 5;
+                    if (progress >= 95) {
+                        clearInterval(animation);
+                        progressBar.style.width = '100%';
+                        setTimeout(() => {
+                            countdownElement.style.display = 'none';
+                            downloadStatus.innerHTML = '<span>✅ 下载已经开始,如果没有开始，请稍后再试或者反馈我们</span>';
+                        }, 500);
+                    } else {
+                        progressBar.style.width = `${progress}%`;
+                    }
+                }, 300);
+            }
+            setTimeout(() => {
+                const retryDownloadButton = document.getElementById('retryDownload');
+                if (retryDownloadButton) {
+                    retryDownloadButton.style.display = 'inline-block';
+                } else {
+                    console.error('retryDownload 元素未找到！');
+                }
+            }, 19500);
+
+            function showFallbackOption() {
+                countdownElement.innerHTML = '自动下载受阻，请手动点击下载按钮';
+                downloadButton.style.display = 'inline-block';
+                downloadStatus.innerHTML = '<span style="color: red;">❌ 下载失败，请尝试手动下载</span>';
+            }
+
+            // 初始化
+            const timerElement = document.getElementById('timer');
+            const countdownElement = document.getElementById('countdown');
+            const downloadButton = document.getElementById('downloadButton');
+            const downloadStatus = document.getElementById('downloadStatus');
+            const retryDownloadButton = document.getElementById('retryDownload');
+
+            downloadButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                triggerDownload();
+            });
+            retryDownloadButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                triggerDownload();
+            });
+
+            setTimeout(updateTimer, 1000);
+        });
+    </script>
+</body>
+</html>

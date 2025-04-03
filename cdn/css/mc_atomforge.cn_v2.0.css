@@ -1,0 +1,639 @@
+:root {
+    /* ... 其他变量 ... */
+    --nav-bg-color: #ffcc00; /* 导航栏背景色 - 活力黄 */
+    --nav-text-color: #222; /* 导航栏文字颜色 - 深灰，与黄色形成对比 */
+    --nav-hover-bg-color: #ffdd44; /* 导航栏链接悬停背景色 - 更亮的黄色 */
+    --nav-hover-text-color: #000; /* 导航栏链接悬停文字颜色 - 黑色 */
+    --nav-border-radius: 25px; /* 导航栏圆角半径 */
+    --main-color-rgb: 108, 92, 231;  /* 对应#6c5ce7 */
+    --accent-color-rgb: 168, 164, 255;  /* 对应#a8a4ff */
+}
+
+[data-theme="dark"] {
+    /* ... 其他深色模式变量 ... */
+    --nav-bg-color: #333; /* 深色模式导航栏背景色 */
+    --nav-text-color: #eee; /* 深色模式导航栏文字颜色 */
+    --nav-hover-color: #666; /* 深色模式导航栏悬停颜色 */
+    --nav-border-radius: 25px; /* 深色模式导航栏圆角半径 */
+    --main-color-rgb: 168, 164, 255;
+    --accent-color-rgb: 108, 92, 231;
+}
+
+/* 使body使用flex布局，并把footer布局在最下面 */
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+}
+
+body {
+    background: var(--bg-gradient);
+    font-family: 'Noto Sans SC', 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    color: inherit;
+}
+
+/* 导航栏样式 */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--nav-bg-color);
+    color: var(--nav-text-color);
+    padding: 10px 10px; /* 修改内边距，使导航栏变长 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 添加阴影 */
+    position: fixed; /* 固定导航栏在屏幕顶部 */
+    top: 0; /* 保持在顶部 */
+    width: 53%; /* 占据整个宽度 */
+    z-index: 10; /* 确保导航栏在最上层 */
+    overflow: hidden; /* 隐藏溢出部分 */
+    border-radius: var(--nav-border-radius); /* 添加圆角 */
+}
+
+.logo a {
+    color: var(--nav-text-color);
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    transition: color 0.3s ease; /* 添加颜色过渡效果 */
+}
+
+.logo a:hover {
+    color: var(--nav-hover-text-color);
+}
+
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    background-color: var(--nav-bg-color);
+    padding: 10px 0;
+    display: none; /* 默认隐藏，点击汉堡按钮再显示 */
+}
+
+.nav-links.active {
+    display: flex; /* 点击汉堡按钮时显示 */
+    flex-direction: column; /* 确保在小屏幕上也能正确显示 */
+}
+
+.nav-links li {
+    margin-left: 20px;
+    margin-bottom: 10px; /* 增加底部间距 */
+    position: relative; /* 为动画定位 */
+}
+
+.nav-links a {
+    color: var(--nav-text-color);
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 15px; /* 链接本身的圆角 */
+    transition: all 0.3s ease; /* 添加所有属性过渡效果 */
+}
+
+.nav-links a:hover {
+    background-color: var(--nav-hover-bg-color);
+    color: var(--nav-hover-text-color);
+    box-shadow: 0 0 10px var(--nav-hover-bg-color);
+}
+
+/* 动画下划线 */
+.nav-links li::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-color);
+    bottom: 0;
+    left: 50%;
+    transition: all 0.3s ease; /* 动画过渡效果 */
+}
+
+.nav-links li:hover::after {
+    width: 50%;
+    left: 0;
+}
+
+/* 导航栏光标悬停动画 */
+.navbar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.5s ease;
+    z-index: -1;
+}
+
+.navbar:hover::before {
+    left: 100%;
+}
+
+/* 其他css样式 */
+.anime-header {
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+}
+
+.hologram-line {
+    height: 3px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--main-color) 50%, 
+        transparent 100%);
+    animation: hologram 2s infinite;
+}
+
+.group-card {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.9);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+}
+
+.docs-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.9);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+}
+
+.holographic-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 15px var(--accent-color);
+    transition: transform 0.3s;
+}
+
+.holographic-avatar:hover {
+    transform: rotateY(180deg);
+}
+
+.qrcode-container {
+    position: relative;
+    width: 200px;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    margin-top: 1rem;
+}
+
+/* 扫描线动画 */
+.qrcode-container {
+    position: relative;
+    height: 200px; /* 添加固定高度 */
+}
+
+.scan-line {
+    width: 100%;
+    left: 0;
+    animation: scan 2s infinite linear;
+}
+
+@keyframes scan {
+    0% { top: 5%; opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { top: 95%; opacity: 0.8; }
+}
+
+/* 加载动画 */
+.dot-flashing {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: var(--main-color);
+    animation: dotFlashing 1s infinite linear;
+}
+
+@keyframes dotFlashing {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(30px); }
+    100% { transform: translateX(0); }
+}
+
+.markdown-body {
+    font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif;
+    line-height: 1.6;
+    color: #24292e;
+}
+
+.markdown-body table {
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+.markdown-body td, .markdown-body th {
+    border: 1px solid #dfe2e5;
+    padding: 0.6em 1em;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+/* 新增切换主题按钮样式 */
+.join-button {
+    display: inline-block;
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    background: linear-gradient(135deg, 
+        rgba(var(--main-color-rgb), 1) 0%, 
+        rgba(var(--accent-color-rgb), 1) 100%
+    );
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 8px 24px rgba(var(--main-color-rgb), 0.2);
+}
+
+/* 霓虹边框动画 */
+.join-button::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg,
+        var(--main-color),
+        var(--accent-color),
+        var(--main-color)
+    );
+    z-index: -1;
+    border-radius: 50px;
+    animation: borderFlow 3s linear infinite;
+    background-size: 200% auto;
+    opacity: 0.8;
+}
+
+/* 流光效果 */
+.join-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -20%;
+    width: 40%;
+    height: 200%;
+    background: linear-gradient(
+        to right,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.3) 50%,
+        rgba(255,255,255,0) 100%
+    );
+    transform: translateY(-50%) rotate(25deg);
+    animation: shine 3s infinite;
+}
+
+/* 动画定义 */
+@keyframes borderFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes shine {
+    0% { left: -20%; }
+    20% { left: 120%; }
+    100% { left: 120%; }
+}
+
+/* 悬停状态 */
+.join-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 12px 32px rgba(var(--main-color-rgb), 0.3),
+        0 0 0 3px rgba(var(--accent-color-rgb), 0.2);
+}
+
+.join-button:hover::before {
+    opacity: 1;
+}
+
+/* 点击状态 */
+.join-button:active {
+    transform: translateY(1px);
+    box-shadow: 
+        0 6px 16px rgba(var(--main-color-rgb), 0.2),
+        0 0 0 2px var(--accent-color);
+}
+
+/* 深色模式适配 */
+[data-theme="dark"] .join-button {
+    color: var(--nav-text-color);
+}
+
+[data-theme="dark"] .join-button::after {
+    background: linear-gradient(
+        to right,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.2) 50%,
+        rgba(255,255,255,0) 100%
+    );
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    margin: 2rem auto;
+    max-width: 800px;
+    position: relative;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: auto;
+}
+
+/* 添加新的CSS样式 */
+.holographic-iframe {
+    width: 100%;
+    height: 500px; /* 根据需要调整高度 */
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+/* 新增样式 */
+.group-container {
+    position: relative;
+    margin: 2rem auto;
+    max-width: 800px;
+}
+
+.group-container .border-label {
+    position: absolute;
+    top: -15px;
+    left: 10px;
+    background-color: #000; /* 小黑边背景颜色 */
+    color: #fff; /* 文本颜色 */
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    white-space: nowrap;
+    z-index: 1; /* 确保标签在最上层 */
+}
+
+.dynamic-text {
+    position: absolute;
+    top: 30px; /* 根据需要调整位置 */
+    left: 410px; /* 根据需要调整位置 */
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    font-size: 2rem;
+    color: var(--main-color);
+}
+
+#home, #features, #join-us, #support, #contact {
+    padding: 20px;
+    text-align: center;
+}
+
+/* 页面标题下划线带 */
+:root {
+    --main-color: #6c5ce7; /* 紫色 */
+    --accent-color: #a8a4ff; /* 浅紫色 */
+    /* ... 其他变量 ... */
+}
+
+[data-theme="dark"] {
+    --main-color: #a8a4ff; /* 浅紫色 */
+    --accent-color: #6c5ce7; /* 紫色 */
+    /* ... 其他变量 ... */
+}
+
+.main-title-container {
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    --main-color: #6c5ce7; /* 紫色 */
+    --accent-color: #a8a4ff; /* 浅紫色 */
+}
+
+.title-underline {
+    height: 3px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--main-color) 50%, 
+        transparent 100%);
+    animation: hologram 2s infinite;
+}
+
+/* 添加媒体查询以优化移动设备 */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .logo {
+        margin-bottom: 10px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+
+    .nav-links a {
+        padding: 10px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .main-title-container {
+        padding: 1rem;
+    }
+
+    .docs-container {
+        padding: 1rem;
+    }
+
+    .footer {
+        padding: 1rem;
+    }
+
+    .join-button {
+        padding: 12px 28px;
+        font-size: 1rem;
+    }
+    .join-button::after {
+        animation-duration: 4s;
+    }
+}
+    .hamburger {
+        display: block;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        z-index: 11; /* 确保汉堡按钮在导航栏之上 */
+    }
+
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: var(--nav-text-color);
+        margin: 5px 0;
+        transition: all 0.3s ease;
+    }
+
+    /* 新增汉堡包图标动画样式 */
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* 动态文字移动端适配 */
+    .dynamic-text {
+        position: relative;
+        top: auto;
+        left: auto;
+        text-align: center;
+        font-size: 1.2rem;
+        margin: 10px 0;
+        padding: 0 10px;
+    }
+
+    /* 头像容器适配 */
+    .avatar-section {
+        margin: 0 auto;
+        width: 80%;
+    }
+
+    /* 按钮容器适配 */
+    .button-container {
+        margin: 20px 0;
+    }
+
+    /* 公告栏适配 */
+    /* style.css */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+    background-color: #fff; /* 白色背景 */
+    margin: 15% auto;
+    padding: 25px; /* 增加内边距 */
+    border-radius: 10px; /* 圆角 */
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+    position: relative;
+    transition: transform 0.3s ease-out; /* 添加过渡效果 */
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute; /* 绝对定位，脱离文档流 */
+    top: 10px;      /* 距离顶部10px */
+    right: 10px;     /* 距离右边10px */
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+h2 {
+    margin-bottom: 15px; /* 增加标题下边距 */
+    color: #333;
+    border-bottom: 1px solid #eee; /* 添加底部边框 */
+    padding-bottom: 8px; /* 增加标题底部内边距 */
+}
+
+p {
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); } /* 初始位置向上偏移 */
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal.fadeOut {
+    animation: fadeOut 0.2s ease-in forwards;
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-20px);}
+}
